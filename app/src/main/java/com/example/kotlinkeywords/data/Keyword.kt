@@ -1,8 +1,13 @@
 package com.example.kotlinkeywords.data
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Keyword(
-    val name: String,
-    val description: String
+    @PrimaryKey val name: String,
+    @ColumnInfo(defaultValue = "No description") val description: String
 )
 
 val keywords: List<Keyword> = List(20) {
