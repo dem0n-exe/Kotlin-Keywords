@@ -8,11 +8,11 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.kotlinkeywords.data.keywords
 import com.example.kotlinkeywords.ui.KotlinKeywordsTheme
 
 class HomeFragment : Fragment() {
     private val args: HomeFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -22,7 +22,6 @@ class HomeFragment : Fragment() {
             setContent {
                 KotlinKeywordsTheme {
                     HomeContent(
-                        keywords = keywords,
                         title = args.title,
                     ) { navigateToAddFragment() }
                 }

@@ -12,7 +12,7 @@ class FillData(context: Context, workerParameters: WorkerParameters) :
     override suspend fun doWork(): Result = coroutineScope {
         try {
             val database = KeywordDatabase.getInstance(applicationContext)
-            database.keywordDao().insert(keywords)
+            database.keywordDao().insert(dummyKeywords)
             Result.success()
         } catch (exception: Exception) {
             Log.e(TAG, "Error filling data", exception)

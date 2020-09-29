@@ -13,9 +13,11 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -33,7 +35,6 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeContent(title: String, navigate: () -> Unit = {}) {
-    val viewModel: KeywordViewModel = viewModel(factory = Injector.provideKeywordViewModelFactory())
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
@@ -48,12 +49,21 @@ fun HomeContent(title: String, navigate: () -> Unit = {}) {
             )
         }
     ) {
-        LazyKeywordList(keywords = dummyKeywords, scaffoldState)
+        LazyKeywordList(scaffoldState)
     }
 }
 
 @Composable
-fun LazyKeywordList(keywords: List<Keyword>, scaffoldState: ScaffoldState? = null) {
+fun LazyKeywordList(scaffoldState: ScaffoldState? = null) {
+    val viewModel: KeywordViewModel = viewModel(
+        factory = Injector.provideKeywordViewModelFactory(ContextAmbient.current)
+    )
+    val keywords = viewModel.keywords.observeAsState()
+    LazyKeywordListCreator(keywords = keywords.value ?: dummyKeywords, scaffoldState)
+}
+
+@Composable
+fun LazyKeywordListCreator(keywords: List<Keyword>, scaffoldState: ScaffoldState?) {
     LazyColumnFor(items = keywords, horizontalAlignment = Alignment.CenterHorizontally) { keyword ->
         KeywordCard(keyword = keyword, scaffoldState)
     }
@@ -98,7 +108,7 @@ fun PreviewKeywordCard() {
 @Composable
 fun PreviewLazyKeywordList() {
     KotlinKeywordsTheme {
-        LazyKeywordList(keywords = dummyKeywords)
+        LazyKeywordListCreator(keywords = dummyKeywords, null)
     }
 }
 

@@ -1,15 +1,17 @@
 package com.example.kotlinkeywords.utility
 
-import com.example.kotlinkeywords.KeywordApp
+import android.content.Context
+import com.example.kotlinkeywords.data.KeywordDatabase
 import com.example.kotlinkeywords.data.Repository
 import com.example.kotlinkeywords.viewmodel.KeywordViewModelFactory
 
 object Injector {
-    fun provideKeywordViewModelFactory(): KeywordViewModelFactory {
-        return KeywordViewModelFactory(provideRepository())
+    fun provideKeywordViewModelFactory(context: Context): KeywordViewModelFactory {
+        return KeywordViewModelFactory(provideRepository(context))
     }
 
-    fun provideRepository(): Repository {
-        return Repository(KeywordApp().databaseInstance)
+    private fun provideRepository(context: Context): Repository {
+        val database = KeywordDatabase.getInstance(context.applicationContext)
+        return Repository(database)
     }
 }
