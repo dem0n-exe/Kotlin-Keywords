@@ -12,5 +12,5 @@ interface KeywordDao {
     fun getAll(): LiveData<List<Keyword>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(keyword: List<Keyword>)
+    suspend fun insert(keyword: List<Keyword>)
 }

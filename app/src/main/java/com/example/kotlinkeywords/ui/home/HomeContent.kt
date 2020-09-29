@@ -21,15 +21,19 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.viewModel
 import androidx.ui.tooling.preview.Preview
 import com.example.kotlinkeywords.R
 import com.example.kotlinkeywords.data.Keyword
-import com.example.kotlinkeywords.data.keywords
+import com.example.kotlinkeywords.data.dummyKeywords
 import com.example.kotlinkeywords.ui.KotlinKeywordsTheme
+import com.example.kotlinkeywords.utility.Injector
+import com.example.kotlinkeywords.viewmodel.KeywordViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeContent(keywords: List<Keyword>, title: String, navigate: () -> Unit = {}) {
+fun HomeContent(title: String, navigate: () -> Unit = {}) {
+    val viewModel: KeywordViewModel = viewModel(factory = Injector.provideKeywordViewModelFactory())
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
@@ -44,7 +48,7 @@ fun HomeContent(keywords: List<Keyword>, title: String, navigate: () -> Unit = {
             )
         }
     ) {
-        LazyKeywordList(keywords = keywords, scaffoldState)
+        LazyKeywordList(keywords = dummyKeywords, scaffoldState)
     }
 }
 
@@ -94,7 +98,7 @@ fun PreviewKeywordCard() {
 @Composable
 fun PreviewLazyKeywordList() {
     KotlinKeywordsTheme {
-        LazyKeywordList(keywords = keywords)
+        LazyKeywordList(keywords = dummyKeywords)
     }
 }
 
@@ -102,6 +106,6 @@ fun PreviewLazyKeywordList() {
 @Composable
 fun PreviewHomeContent() {
     KotlinKeywordsTheme {
-        HomeContent(keywords = keywords, title = "Home")
+        HomeContent(title = "Home")
     }
 }

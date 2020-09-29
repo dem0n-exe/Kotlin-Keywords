@@ -10,6 +10,6 @@ data class Keyword(
     @ColumnInfo(defaultValue = "No description") val description: String
 )
 
-val keywords: List<Keyword> = List(20) {
+val dummyKeywords: List<Keyword> = List(20) {
     Keyword("if", "conditional statement $it")
 }
