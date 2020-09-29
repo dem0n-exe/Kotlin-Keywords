@@ -5,6 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 
 @Database(entities = [Keyword::class], version = 1, exportSchema = false)
 abstract class KeywordDatabase : RoomDatabase() {
@@ -28,16 +30,12 @@ abstract class KeywordDatabase : RoomDatabase() {
                     object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-
+                            val request = OneTimeWorkRequestBuilder<FillData>().build()
+                            WorkManager.getInstance(context).enqueue(request)
                         }
                     }
                 )
                 .build()
-        }
-
-        suspend fun fillData(context: Context) {
-            val database = KeywordDatabase.getInstance(context)
-            database.keywordDao().insert(keywords)
         }
     }
 }

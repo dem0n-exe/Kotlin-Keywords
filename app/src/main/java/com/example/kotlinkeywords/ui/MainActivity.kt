@@ -1,4 +1,4 @@
-package com.example.kotlinkeywords
+package com.example.kotlinkeywords.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
