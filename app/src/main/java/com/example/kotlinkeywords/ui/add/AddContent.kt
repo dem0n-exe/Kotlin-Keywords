@@ -75,7 +75,7 @@ fun AddBody(navigate: () -> Unit) {
                     viewModel.insert(
                         Keyword(
                             name = keywordText.value.text,
-                            description = descriptionText.value.text
+                            description = if (descriptionText.value.text.isEmpty()) "No Description" else descriptionText.value.text
                         )
                     )
                     navigate()
