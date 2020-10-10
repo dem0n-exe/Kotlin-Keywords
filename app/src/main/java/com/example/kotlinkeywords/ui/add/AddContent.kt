@@ -13,10 +13,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.viewModel
 import androidx.ui.tooling.preview.Preview
+import com.example.kotlinkeywords.data.Keyword
 import com.example.kotlinkeywords.ui.KotlinKeywordsTheme
+import com.example.kotlinkeywords.utility.Injector
+import com.example.kotlinkeywords.viewmodel.KeywordViewModel
 
 @Composable
 fun AddContent(title: String, navigate: () -> Unit) {
@@ -35,6 +40,9 @@ fun AddBody(navigate: () -> Unit) {
     val keywordText = remember { mutableStateOf(TextFieldValue()) }
     val isValidKeyword = remember { mutableStateOf(true) }
     val descriptionText = remember { mutableStateOf(TextFieldValue()) }
+    val viewModel: KeywordViewModel = viewModel(
+        factory = Injector.provideKeywordViewModelFactory(ContextAmbient.current)
+    )
     Column(
         modifier = Modifier.padding(16.dp).wrapContentSize()
     ) {
@@ -64,6 +72,12 @@ fun AddBody(navigate: () -> Unit) {
             onClick = {
                 isValidKeyword.value = keywordText.value.text.count() > 0
                 if (isValidKeyword.value) {
+                    viewModel.insert(
+                        Keyword(
+                            name = keywordText.value.text,
+                            description = descriptionText.value.text
+                        )
+                    )
                     navigate()
                 }
             },

@@ -13,7 +13,7 @@ abstract class KeywordDatabase : RoomDatabase() {
     abstract fun keywordDao(): KeywordDao
 
     companion object {
-        private const val DATABASE_NAME = "keyword.db"
+        private const val DATABASE_NAME = "keyword-db"
 
         @Volatile
         private var instance: KeywordDatabase? = null
