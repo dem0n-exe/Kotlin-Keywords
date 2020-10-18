@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.ui.tooling.preview.Preview
 import com.example.kotlinkeywords.R
 import com.example.kotlinkeywords.data.Keyword
-import com.example.kotlinkeywords.data.keywords
+import com.example.kotlinkeywords.data.dummyKeywords
 import com.example.kotlinkeywords.ui.KotlinKeywordsTheme
 import kotlinx.coroutines.launch
 
@@ -94,7 +94,7 @@ fun PreviewKeywordCard() {
 @Composable
 fun PreviewLazyKeywordList() {
     KotlinKeywordsTheme {
-        LazyKeywordList(keywords = keywords)
+        LazyKeywordList(keywords = dummyKeywords)
     }
 }
 
@@ -102,6 +102,6 @@ fun PreviewLazyKeywordList() {
 @Composable
 fun PreviewHomeContent() {
     KotlinKeywordsTheme {
-        HomeContent(keywords = keywords, title = "Home")
+        HomeContent(keywords = dummyKeywords, title = "Home")
     }
 }
